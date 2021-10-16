@@ -11,3 +11,4 @@ build
 !.yarn/versions
 .pnp.*
 .env
+src/dev-components
