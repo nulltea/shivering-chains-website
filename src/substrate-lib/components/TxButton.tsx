@@ -5,20 +5,32 @@ import { web3FromSource } from '@polkadot/extension-dapp';
 
 import { useSubstrate } from '../';
 import utils from '../utils';
+import { SemanticCOLORS } from 'semantic-ui-react/dist/commonjs/generic';
+
+type TxButtonArgs = {
+  label: string
+  setStatus: Function
+  accountPair?: any
+  color: SemanticCOLORS
+  style?: string | null
+  type: string
+  attrs?: any
+  disabled: boolean
+}
 
 function TxButton ({
-  accountPair = null,
   label,
   setStatus,
+  accountPair = null,
   color = 'blue',
   style = null,
   type = 'QUERY',
   attrs = null,
   disabled = false
-}) {
+}: TxButtonArgs) {
   // Hooks
   const { api } = useSubstrate();
-  const [unsub, setUnsub] = useState(null);
+  const [unsub, setUnsub] = useState<Function | any>(null);
   const [sudoKey, setSudoKey] = useState(null);
 
   const { palletRpc, callable, inputParams, paramFields } = attrs;
@@ -60,12 +72,12 @@ function TxButton ({
     return fromAcct;
   };
 
-  const txResHandler = ({ status }) =>
+  const txResHandler = ({ status }: {status: any}) =>
     status.isFinalized
       ? setStatus(`😉 Finalized. Block hash: ${status.asFinalized.toString()}`)
       : setStatus(`Current transaction status: ${status.type}`);
 
-  const txErrHandler = err =>
+  const txErrHandler = (err: Error) =>
     setStatus(`😞 Transaction Failed: ${err.toString()}`);
 
   const sudoTx = async () => {
@@ -117,7 +129,7 @@ function TxButton ({
     setUnsub(() => unsub);
   };
 
-  const queryResHandler = result =>
+  const queryResHandler = (result: any) =>
     result.isNone ? setStatus('None') : setStatus(result.toString());
 
   const query = async () => {
@@ -154,7 +166,7 @@ function TxButton ({
     (isConstant() && constant());
   };
 
-  const transformParams = (paramFields, inputParams, opts = { emptyAsNull: true }) => {
+  const transformParams = (paramFields: any[], inputParams: any[], opts = { emptyAsNull: true }) => {
     // if `opts.emptyAsNull` is true, empty param value will be added to res as `null`.
     //   Otherwise, it will not be added
     const paramVal = inputParams.map(inputParam => {
@@ -175,8 +187,8 @@ function TxButton ({
 
       // Deal with a vector
       if (type.indexOf('Vec<') >= 0) {
-        converted = converted.split(',').map(e => e.trim());
-        converted = converted.map(single => isNumType(type)
+        converted = converted.split(',').map((e: string) => e.trim());
+        converted = converted.map((single: string) => isNumType(type)
           ? (single.indexOf('.') >= 0 ? Number.parseFloat(single) : Number.parseInt(single))
           : single
         );
@@ -191,13 +203,13 @@ function TxButton ({
     }, []);
   };
 
-  const isNumType = type =>
+  const isNumType = (type: string | string[]) =>
     utils.paramConversion.num.some(el => type.indexOf(el) >= 0);
 
   const allParamsFilled = () => {
     if (paramFields.length === 0) { return true; }
 
-    return paramFields.every((paramField, ind) => {
+    return paramFields.every((paramField: { optional: any; }, ind: string | number) => {
       const param = inputParams[ind];
       if (paramField.optional) { return true; }
       if (param == null) { return false; }
@@ -207,7 +219,7 @@ function TxButton ({
     });
   };
 
-  const isSudoer = acctPair => {
+  const isSudoer = (acctPair: { address: any; }) => {
     if (!sudoKey || !acctPair) { return false; }
     return acctPair.address === sudoKey;
   };
@@ -242,7 +254,7 @@ TxButton.propTypes = {
   }).isRequired
 };
 
-function TxGroupButton (props) {
+function TxGroupButton (props: any) {
   return (
     <Button.Group>
       <TxButton

@@ -13,13 +13,13 @@ import {
 
 import { useSubstrate } from './substrate-lib';
 
-function Main (props) {
+function Main (props: any) {
   const { keyring } = useSubstrate();
   const { setAccountAddress } = props;
   const [accountSelected, setAccountSelected] = useState('');
 
   // Get the list of accounts we possess the private key for
-  const keyringOptions = keyring.getPairs().map(account => ({
+  const keyringOptions = keyring.getPairs().map((account: { address: string; meta: { name: string; }; }) => ({
     key: account.address,
     value: account.address,
     text: account.meta.name.toUpperCase(),
@@ -35,7 +35,7 @@ function Main (props) {
     setAccountSelected(initialAddress);
   }, [setAccountAddress, initialAddress]);
 
-  const onChange = address => {
+  const onChange = (address: string) => {
     // Update state with new account address
     setAccountAddress(address);
     setAccountSelected(address);
@@ -85,7 +85,9 @@ function Main (props) {
             placeholder='Select an account'
             options={keyringOptions}
             onChange={(_, dropdown) => {
-              onChange(dropdown.value);
+              if (dropdown.value != undefined) {
+                onChange(dropdown.value.toString());
+              }
             }}
             value={accountSelected}
           />
@@ -96,21 +98,21 @@ function Main (props) {
   );
 }
 
-function BalanceAnnotation (props) {
+function BalanceAnnotation (props: { accountSelected: any; }) {
   const { accountSelected } = props;
   const { api } = useSubstrate();
   const [accountBalance, setAccountBalance] = useState(0);
 
   // When account address changes, update subscriptions
   useEffect(() => {
-    let unsubscribe;
+    let unsubscribe: Function;
 
     // If the user has selected an address, create a new subscription
     accountSelected &&
-      api.query.system.account(accountSelected, balance => {
+      api.query.system.account(accountSelected, (balance: { data: { free: { toHuman: () => React.SetStateAction<number>; }; }; }) => {
         setAccountBalance(balance.data.free.toHuman());
       })
-        .then(unsub => {
+        .then((unsub: Function) => {
           unsubscribe = unsub;
         })
         .catch(console.error);
@@ -126,7 +128,7 @@ function BalanceAnnotation (props) {
     : null;
 }
 
-export default function AccountSelector (props) {
+export default function AccountSelector (props: any) {
   const { api, keyring } = useSubstrate();
   return keyring.getPairs && api.query ? <Main {...props} /> : null;
 }

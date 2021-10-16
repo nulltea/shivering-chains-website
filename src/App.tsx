@@ -15,12 +15,12 @@ function Main () {
     keyringState === 'READY' &&
     keyring.getPair(accountAddress);
 
-  const loader = text =>
+  const loader = (text: string) =>
     <Dimmer active>
       <Loader size='small'>{text}</Loader>
     </Dimmer>;
 
-  const message = err =>
+  const message = (err: Error) =>
     <Grid centered columns={2} padded>
       <Grid.Column>
         <Message negative compact floating
@@ -37,7 +37,7 @@ function Main () {
     return loader('Loading accounts (please review any extension\'s authorization)');
   }
 
-  const contextRef = createRef();
+  const contextRef = createRef<HTMLDivElement>();
 
   return (
     <div ref={contextRef}>

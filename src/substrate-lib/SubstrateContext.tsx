@@ -16,7 +16,7 @@ console.log(`Connected socket: ${connectedSocket}`);
 ///
 // Initial state for `useReducer`
 
-const INIT_STATE = {
+const INIT_STATE: any = {
   socket: connectedSocket,
   jsonrpc: { ...jsonrpc, ...config.RPC },
   types: config.types,
@@ -30,7 +30,7 @@ const INIT_STATE = {
 ///
 // Reducer function for `useReducer`
 
-const reducer = (state, action) => {
+const reducer = (state: any, action: { type: any; payload: any; }) => {
   switch (action.type) {
     case 'CONNECT_INIT':
       return { ...state, apiState: 'CONNECT_INIT' };
@@ -61,7 +61,7 @@ const reducer = (state, action) => {
 ///
 // Connecting to the Substrate node
 
-const connect = (state, dispatch) => {
+const connect = (state: any, dispatch: Function) => {
   const { apiState, socket, jsonrpc, types } = state;
   // We only want this function to be performed once
   if (apiState) return;
@@ -85,7 +85,7 @@ const connect = (state, dispatch) => {
 // Loading accounts from dev and polkadot-js extension
 
 let loadAccts = false;
-const loadAccounts = (state, dispatch) => {
+const loadAccounts = (state: any, dispatch: Function) => {
   const asyncLoadAccounts = async () => {
     dispatch({ type: 'LOAD_KEYRING' });
     try {
@@ -112,9 +112,9 @@ const loadAccounts = (state, dispatch) => {
   asyncLoadAccounts();
 };
 
-const SubstrateContext = React.createContext();
+const SubstrateContext = React.createContext<any>(null);
 
-const SubstrateContextProvider = (props) => {
+const SubstrateContextProvider = (props: any) => {
   // filtering props and merge with default param value
   const initState = { ...INIT_STATE };
   const neededPropNames = ['socket', 'types'];
@@ -137,6 +137,6 @@ SubstrateContextProvider.propTypes = {
   types: PropTypes.object
 };
 
-const useSubstrate = () => ({ ...useContext(SubstrateContext) });
+const useSubstrate = () => ({ ...useContext<any>(SubstrateContext) });
 
 export { SubstrateContextProvider, useSubstrate };
