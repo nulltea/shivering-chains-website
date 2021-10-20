@@ -16,7 +16,7 @@ export default function MintTxForm(props: any) {
         <form onSubmit={handleSubmit(onSubmit)}>
             <Box sx={{ display: 'flex', flexDirection: 'column', minWidth: 500 }}>
                 <FormControl variant="filled" sx={{ m: 1, minWidth: 120, backgroundColor: "#1A1D29" }}>
-                    <InputLabel htmlFor="name-label" sx={{color: '#6E7681'}}>Name</InputLabel>
+                    <InputLabel htmlFor="name-label" sx={{ color: '#6E7681' }}>Name</InputLabel>
                     <Controller
                         name="name"
                         control={control}
@@ -25,11 +25,11 @@ export default function MintTxForm(props: any) {
                     />
                 </FormControl>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Button variant="contained" endIcon={<PhotoCamera />} sx={{height: 45}}>
+                    <Button variant="contained" endIcon={<PhotoCamera />} sx={{ ml: 1, height: 45, backgroundColor: '#1A1D29' }}>
                         UPLOAD
                     </Button>
-                    <FormControl variant="filled" sx={{ m: 1, flex: 1, backgroundColor: "#1A1D29" }}>
-                        <InputLabel htmlFor="contentUri" sx={{ color: '#6E7681'}}>Content URI</InputLabel>
+                    <FormControl variant="filled" sx={{ m: 1, flex: 1, backgroundColor: '#1A1D29' }}>
+                        <InputLabel htmlFor="contentUri" sx={{ color: '#6E7681' }}>Content URI</InputLabel>
                         <Controller
                             name="contentUri"
                             control={control}
@@ -40,7 +40,7 @@ export default function MintTxForm(props: any) {
                 </Box>
 
                 <FormControl variant="filled" sx={{ m: 1, minWidth: 120, backgroundColor: "#1A1D29" }}>
-                    <InputLabel htmlFor="initialPrice" sx={{color: '#6E7681'}}>Initial price</InputLabel>
+                    <InputLabel htmlFor="initialPrice" sx={{ color: '#6E7681' }}>Initial price</InputLabel>
                     <Controller
                         name="initialPrice"
                         control={control}
@@ -48,7 +48,7 @@ export default function MintTxForm(props: any) {
                         render={({ field }) => <Input {...field} />}
                     />
                 </FormControl>
-                <Button variant="contained" type="submit" sx={{m: 2}}>SUBMIT</Button>
+                <Button variant="contained" type="submit" sx={{ mx: 1, my: 2 }}>SUBMIT</Button>
             </Box>
         </form>
     )

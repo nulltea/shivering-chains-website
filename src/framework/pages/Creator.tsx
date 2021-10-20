@@ -1,16 +1,12 @@
 import { Box, Grid } from "@mui/material";
-import MintTxForm from "../components/nft/MintTxForm";
-import NFTCard from "../components/nft/NftCard";
+import { MintTxForm, NftGridView } from "../components/nft";
 
-export default function CreatorPage(params: any) {
+export default function CreatorPage(props: any) {
+    console.log(props.accountPair)
     return (
         <Box sx={{ m: 2, display: 'flex', justifyContent: 'space-around' }}>
             <MintTxForm />
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{m: 1, maxWidth: 800}}>
-                <Grid item xs={6}>
-                    <NFTCard name="cool" hash="0800fc577294c34e0b28ad2839435945" price={200.0} contentUri=""/>
-                </Grid>
-            </Grid>
+            <NftGridView accountPair={props.accountPair}/>
         </Box>
     )
 }

@@ -16,7 +16,6 @@ function Main() {
   const { apiState, keyring, keyringState, apiError } = useSubstrate();
   const theme = AppTheme();
   const classes = AppStyles();
-
   const accountPair =
     accountAddress &&
     keyringState === 'READY' &&
@@ -44,15 +43,16 @@ function Main() {
     return loader('Loading accounts (please review any extension\'s authorization)');
   }
 
+  console.log(accountAddress);
   const contextRef = createRef<HTMLDivElement>();
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.root}>
+      <div ref={contextRef} className={classes.root} >
         <Nav>
           <AccountSelector setAccountAddress={setAccountAddress} />
         </Nav>
-        <CreatorPage/>
+        <CreatorPage accountPair={accountPair} />
         <DeveloperConsole />
       </div>
     </ThemeProvider>

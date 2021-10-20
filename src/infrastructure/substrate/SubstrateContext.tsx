@@ -22,8 +22,8 @@ const INIT_STATE: any = {
   types: config.types,
   keyring: null,
   keyringState: null,
-  api: null,
-  apiError: null,
+  api: ApiPromise,
+  apiError: Error,
   apiState: null
 };
 

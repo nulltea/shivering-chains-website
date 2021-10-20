@@ -10,4 +10,4 @@ build
 !.yarn/versions
 .pnp.*
 .env
-src/framework/components/substrate/*.js
+src/framework/components/substrate/**.js

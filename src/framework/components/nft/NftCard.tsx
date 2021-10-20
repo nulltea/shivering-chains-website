@@ -4,20 +4,14 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
-type NFT = {
-    hash: string,
-    name: string,
-    contentUri: string,
-    price: number,
-}
+import { AssetNFT } from './AssetNFT';
 
 export default function NFTCard({
     hash,
     name,
     contentUri,
-    price,
-}: NFT) {
+    initialPrice,
+}: AssetNFT) {
     return (
         <Card sx={{ maxWidth: 345, backgroundColor: '#1A1D29' }}>
             <CardContent>
