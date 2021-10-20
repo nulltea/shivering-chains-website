@@ -14,7 +14,7 @@ type TxButtonArgs = {
   color: SemanticCOLORS
   style?: string | null
   type: string
-  attrs?: any
+  attrs?: any | null
   disabled: boolean
 }
 

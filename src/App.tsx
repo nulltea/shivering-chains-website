@@ -8,6 +8,7 @@ import { SubstrateContextProvider, useSubstrate } from './infrastructure/substra
 import { DeveloperConsole } from './framework/components/substrate';
 import AccountSelector from './framework/components/substrate/AccountSelector';
 import { ThemeProvider } from '@mui/styles';
+import CreatorPage from './framework/pages/Creator';
 
 
 function Main() {
@@ -51,6 +52,7 @@ function Main() {
         <Nav>
           <AccountSelector setAccountAddress={setAccountAddress} />
         </Nav>
+        <CreatorPage/>
         <DeveloperConsole />
       </div>
     </ThemeProvider>

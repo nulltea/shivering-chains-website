@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {PaletteMode} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { PaletteMode } from '@mui/material';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import {createStyles, makeStyles} from '@mui/styles';
-import {  createTheme, Theme } from '@mui/material/styles';
+import { createStyles, makeStyles } from '@mui/styles';
+import { createTheme, Theme } from '@mui/material/styles';
 
 export function AppTheme(): Theme {
     const [themeOverride, setThemeOverride] = useState<PaletteMode>();
@@ -37,7 +37,23 @@ export function AppTheme(): Theme {
         palette = themeOverride;
     }
 
-    return createTheme({palette: {mode: "dark"}});
+    return createTheme({
+        palette: {
+            mode: "dark",
+            primary: {
+                main: '#04AFD3',
+            },
+            secondary: {
+                main: '#04AFD3',
+            },
+            text: {
+                primary: "#ACB1B8"
+            },
+            background: {
+                default: "#0D1117"
+            },
+        },
+    });
 }
 
 export const AppStyles = makeStyles((theme: Theme) =>

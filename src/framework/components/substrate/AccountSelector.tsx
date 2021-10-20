@@ -6,7 +6,8 @@ import {
   MenuItem,
   Box,
   IconButton,
-  FormControl
+  FormControl,
+  Badge
 } from '@mui/material';
 
 import {
@@ -58,26 +59,30 @@ function Main(props: any) {
           </a>
         </span>
         : null}
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }} style={{ outline: "none" }}>
-        <Select
-          placeholder='Select an account'
-          value={accountSelected}
-          onChange={(event, c) => {
-            if (event.target.value != undefined) {
-              onChange(event.target.value.toString());
-            }
-          }}
-        >
-          {keyring.getPairs().map((account: { address: string; meta: { name: string; }; }) => (
-            <MenuItem value={account.address}><AccountCircle />{account.meta.name.toUpperCase()}</MenuItem>))}
-        </Select>
+      <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+        <BalanceAnnotation accountSelected={accountSelected}>
+          <Select
+            placeholder='Select an account'
+            value={accountSelected}
+            onChange={(event, c) => {
+              if (event.target.value != undefined) {
+                onChange(event.target.value.toString());
+              }
+            }}
+          >
+            {keyring.getPairs().map((account: { address: string; meta: { name: string; }; }) => (
+              <MenuItem value={account.address}>
+                <AccountCircle />
+                {account.meta.name.toUpperCase()}
+              </MenuItem>))}
+          </Select>
+        </BalanceAnnotation>
       </FormControl>
-      <BalanceAnnotation accountSelected={accountSelected} />
     </Box>
   );
 }
 
-function BalanceAnnotation(props: { accountSelected: any; }) {
+function BalanceAnnotation(props: { accountSelected: any; children: JSX.Element }) {
   const { accountSelected } = props;
   const { api } = useSubstrate();
   const [accountBalance, setAccountBalance] = useState(0);
@@ -100,10 +105,9 @@ function BalanceAnnotation(props: { accountSelected: any; }) {
   }, [api, accountSelected]);
 
   return accountSelected
-    ? <Label pointing='left' color='blue'>
-      <AccountBalanceWalletSharp/>
-      {accountBalance}
-    </Label>
+    ? <Badge badgeContent={accountBalance} color="primary">
+      {props.children}
+    </Badge>
     : null;
 }
 
