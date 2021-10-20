@@ -1,13 +1,11 @@
 import React, { useState, createRef } from 'react';
-import { Container, Dimmer, Loader, Grid, Sticky, Message } from 'semantic-ui-react';
+import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
 import { AppStyles, AppTheme } from './framework/theme/Theme';
 import Nav from "./framework/components/navigation/Nav"
-// import { Site } from './framework/components/navigation/SitePicker';
-// import { Route } from './framework/components/navigation/Routes';
-import { SubstrateContextProvider, useSubstrate } from './substrate-lib';
-import { DeveloperConsole } from './substrate-lib/components';
+import { SubstrateContextProvider, useSubstrate } from './infrastructure/substrate';
+import { DeveloperConsole } from './framework/components/substrate';
 import AccountSelector from './framework/components/substrate/AccountSelector';
 import { ThemeProvider } from '@mui/styles';
 

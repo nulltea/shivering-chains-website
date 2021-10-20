@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Button } from 'semantic-ui-react';
 import { web3FromSource } from '@polkadot/extension-dapp';
 
-import { useSubstrate } from '../';
-import utils from '../utils';
+import { useSubstrate } from '../../../infrastructure/substrate';
+import utils from '../../../infrastructure/substrate/utils';
 import { SemanticCOLORS } from 'semantic-ui-react/dist/commonjs/generic';
 
 type TxButtonArgs = {

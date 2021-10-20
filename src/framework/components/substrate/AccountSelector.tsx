@@ -14,7 +14,7 @@ import {
   AccountCircle
 } from '@mui/icons-material';
 
-import { useSubstrate } from '../../../substrate-lib';
+import { useSubstrate } from '../../../infrastructure/substrate';
 import { Label } from 'semantic-ui-react';
 
 
