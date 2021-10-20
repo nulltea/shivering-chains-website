@@ -2,14 +2,22 @@ import React, { useState, createRef } from 'react';
 import { Container, Dimmer, Loader, Grid, Sticky, Message } from 'semantic-ui-react';
 import 'semantic-ui-css/semantic.min.css';
 
+import { AppStyles, AppTheme } from './framework/theme/Theme';
+import Nav from "./framework/components/navigation/Nav"
+// import { Site } from './framework/components/navigation/SitePicker';
+// import { Route } from './framework/components/navigation/Routes';
 import { SubstrateContextProvider, useSubstrate } from './substrate-lib';
 import { DeveloperConsole } from './substrate-lib/components';
+import AccountSelector from './framework/components/substrate/AccountSelector';
+import { ThemeProvider } from '@mui/styles';
 
-import AccountSelector from './AccountSelector';
 
-function Main () {
+function Main() {
   const [accountAddress, setAccountAddress] = useState(null);
   const { apiState, keyring, keyringState, apiError } = useSubstrate();
+  const theme = AppTheme();
+  const classes = AppStyles();
+
   const accountPair =
     accountAddress &&
     keyringState === 'READY' &&
@@ -40,20 +48,18 @@ function Main () {
   const contextRef = createRef<HTMLDivElement>();
 
   return (
-    <div ref={contextRef}>
-      <Sticky context={contextRef}>
-        <AccountSelector setAccountAddress={setAccountAddress} />
-      </Sticky>
-      <Container>
-        <Grid stackable columns='equal'>
-        </Grid>
-      </Container>
-      <DeveloperConsole />
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className={classes.root}>
+        <Nav>
+          <AccountSelector setAccountAddress={setAccountAddress} />
+        </Nav>
+        <DeveloperConsole />
+      </div>
+    </ThemeProvider>
   );
 }
 
-export default function App () {
+export default function App() {
   return (
     <SubstrateContextProvider>
       <Main />
