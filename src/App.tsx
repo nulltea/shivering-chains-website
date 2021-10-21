@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { Dimmer, Loader, Grid, Message } from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
+import { ThemeProvider } from '@mui/styles';
+import { Alert, AlertTitle, Backdrop, Box, CircularProgress, Typography } from '@mui/material';
 
 import { AppStyles, AppTheme } from './framework/theme/Theme';
 import Nav from './framework/components/navigation/Nav';
 import { SubstrateContextProvider, useSubstrate } from './infrastructure/substrate';
 import { DeveloperConsole } from './framework/components/substrate';
 import AccountSelector from './framework/components/substrate/AccountSelector';
-import { ThemeProvider } from '@mui/styles';
+
 import CreatorPage from './framework/pages/Creator';
 
 function Main () {
@@ -16,40 +16,37 @@ function Main () {
   const theme = AppTheme();
   const classes = AppStyles();
   const accountPair =
-      accountAddress &&
+    accountAddress &&
     keyringState === 'READY' &&
     keyring.getPair(accountAddress);
 
-  const loader = (text: string) =>
-    <Dimmer active>
-      <Loader size='small'>{text}</Loader>
-    </Dimmer>;
+  const [loading, setLoading] = useState(true);
+  const loader = (msg: string) =>
+    <Backdrop sx={{ backgroundColor: '#000', color: '#04AFD3' }} open={loading}>
+      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+        <CircularProgress color="inherit"/>
+        <Typography variant="h5" sx={{ color: '#04AFD3' }}>{msg}</Typography>
+      </Box>
+    </Backdrop>;
 
   const message = (err: Error) =>
-    <Grid centered columns={2} padded>
-      <Grid.Column>
-        <Message negative compact floating
-          header='Error Connecting to Substrate'
-          content={`${JSON.stringify(err, null, 4)}`}
-        />
-      </Grid.Column>
-    </Grid>;
-
-  if (apiState === 'ERROR') return message(apiError);
-  else if (apiState !== 'READY') return loader('Connecting to Substrate');
-
-  if (keyringState !== 'READY') {
-    return loader('Loading accounts (please review any extension\'s authorization)');
-  }
+    <Alert severity="error">
+      <AlertTitle>Failed connecting to Substrate</AlertTitle>
+      {JSON.stringify(err, null, 4)}
+    </Alert>;
 
   return (
     <ThemeProvider theme={theme}>
-      <div className={classes.root} >
+      <div className={classes.root}>
         <Nav>
-          <AccountSelector setAccountAddress={setAccountAddress} />
+          {(keyringState === 'READY') ? <AccountSelector setAccountAddress={setAccountAddress}/> : <div/>}
         </Nav>
-        <CreatorPage accountPair={accountPair || keyring.getPairs()[0]} />
-        <DeveloperConsole />
+        {((apiState !== 'READY') && loader('Connecting to Substrate')) ||
+        ((keyringState !== 'READY') && loader('Loading accounts (please review any extension\'s authorization)')) ||
+        ((apiState === 'ERROR') && message(apiError)) ||
+        <CreatorPage accountPair={accountPair || keyring.getPairs()[0]}/>
+        }
+        <DeveloperConsole/>
       </div>
     </ThemeProvider>
   );
@@ -58,7 +55,7 @@ function Main () {
 export default function App () {
   return (
     <SubstrateContextProvider>
-      <Main />
+      <Main/>
     </SubstrateContextProvider>
   );
 }

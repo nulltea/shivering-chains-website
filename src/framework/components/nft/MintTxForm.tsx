@@ -16,6 +16,7 @@ export default function MintTxForm (props: any) {
   const { accountPair } = props;
   const [status, setStatus] = useState(null);
   const onSubmit: SubmitHandler<MintTxArgs> = async (data) => {
+    console.log(data);
     await DoTx({
       setStatus,
       accountPair,
