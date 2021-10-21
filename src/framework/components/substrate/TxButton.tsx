@@ -10,7 +10,7 @@ import { SemanticCOLORS } from 'semantic-ui-react/dist/commonjs/generic';
 type TxButtonArgs = {
   label: string
   setStatus: Function
-  accountPair?: any
+  accountPair: any
   color: SemanticCOLORS
   style?: string | null
   type: string

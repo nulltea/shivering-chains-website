@@ -1,25 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import {
   Select,
   MenuItem,
   Box,
-  IconButton,
   FormControl,
   Badge
 } from '@mui/material';
 
 import {
-  AccountBalanceWalletSharp,
   AccountCircle
 } from '@mui/icons-material';
 
 import { useSubstrate } from '../../../infrastructure/substrate';
-import { Label } from 'semantic-ui-react';
 
-
-function Main(props: any) {
+function Main (props: any) {
   const { keyring } = useSubstrate();
   const { setAccountAddress } = props;
   const [accountSelected, setAccountSelected] = useState('');
@@ -28,7 +23,7 @@ function Main(props: any) {
   const keyringOptions = keyring.getPairs().map((account: { address: string; meta: { name: string; }; }) => ({
     key: account.address,
     value: account.address,
-    text: account.meta.name.toUpperCase(),
+    text: account.meta.name.toUpperCase()
   }));
 
   const initialAddress =
@@ -111,7 +106,7 @@ function BalanceAnnotation(props: { accountSelected: any; children: JSX.Element 
     : null;
 }
 
-export default function AccountSelector(props: any) {
+export default function AccountSelector (props: any) {
   const { api, keyring } = useSubstrate();
   return keyring.getPairs && api.query ? <Main {...props} /> : null;
 }

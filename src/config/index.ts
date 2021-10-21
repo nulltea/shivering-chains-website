@@ -10,8 +10,7 @@ const envVarNames = [
 ];
 const envVars = envVarNames.reduce((_, mem, n) => {
   // Remove the `REACT_APP_` prefix
-  let e = process.env[n]
-  if (process.env[n] !== undefined) return mem.replace("REACT_APP_", process.env[n]!);
+  if (process.env[n] !== undefined) return mem.replace('REACT_APP_', process.env[n]!);
   return mem;
 }, {});
 
