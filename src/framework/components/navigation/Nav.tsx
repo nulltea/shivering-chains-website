@@ -12,8 +12,7 @@ interface NavProps {
 export default function Nav (props: NavProps): ReactElement {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static"
-              sx={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#1A1D29' }}>
+      <AppBar position="static" sx={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#1A1D29' }}>
         <Toolbar>
           <Paritysubstrate color="white" size={48}/>
         </Toolbar>
